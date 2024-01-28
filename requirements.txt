@@ -1,5 +1,6 @@
 numpy
 pandas
 pyaml
-flask
-"uvicorn[standard]"
+fastapi
+matplotlib
+uvicorn[standard]
