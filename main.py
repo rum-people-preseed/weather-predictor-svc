@@ -25,7 +25,9 @@ async def predict_temperature(country: str | None = None,
     data = pd.read_csv('./data/weatherHistory-processed.csv')
 
     predicted = await utils.get_temperature_next(date=date,
-                                                 temperature_data=data)
+                                                 temperature_data=data,
+                                                 country=country,
+                                                 city=city)
     chart = await plotter.plot_temperature_day(place='%s, %s' % (country, city),
                                                temperature=predicted)
 
