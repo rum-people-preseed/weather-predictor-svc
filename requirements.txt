@@ -3,4 +3,5 @@ pandas
 pyaml
 fastapi
 matplotlib
+prophet
 uvicorn[standard]

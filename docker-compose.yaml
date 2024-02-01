@@ -1,0 +1,10 @@
+services:
+  weather-predictor-svc:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - predictors:/app/predictors
+
+volumes:
+  predictors:

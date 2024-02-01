@@ -35,17 +35,3 @@ async def predict_temperature(country: str | None = None,
                 'average_temperature': predicted['yhat'].sum() / 24,
                 'chart': chart
             }
-
-
-@app.get('/chart/')
-async def get_chart(country: str | None = None,
-                    city: str | None = None,
-                    latitude: str | None = None, 
-                    longtitude: str | None = None,
-                    date: str | None = None):
-    data = pd.read_csv('data/weatherHistory-processed.csv')
-    predicted = await utils.get_temperature_next(date=date,
-                                           temperature_data=data)
-    chart = await plotter.plot_temperature_day()
-    
-    return 

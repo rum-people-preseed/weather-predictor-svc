@@ -1,4 +1,9 @@
-FROM 3.10-bullseye
+FROM python:3.10-bullseye
+
 WORKDIR /app
-ADD . app/
+COPY requirements.txt ./
+RUN pip3 install --no-cache -r requirements.txt
+
+COPY . ./
+
 CMD ["uvicorn", "main:app", "--reload"]
