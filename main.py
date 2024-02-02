@@ -29,12 +29,10 @@ async def predict_temperature(country: str | None = None,
                                                  temperature_data=data,
                                                  country=country,
                                                  city=city)
-    image_path = await plotter.plot_temperature_day(place='%s, %s' % (country, city),
+    image_str = await plotter.plot_temperature_day(place='%s, %s' % (country, city),
                                                temperature=predicted)
-    
-    print('Hello')
 
     return {
                 'average_temperature': predicted['yhat'].sum() / 24,
-                'chart': FileResponse(path=image_path)
+                'chart': image_str
             }
