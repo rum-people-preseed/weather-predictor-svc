@@ -4,6 +4,7 @@ import pandas as pd
 from datetime import datetime
 from src import utils
 from src import plotter
+import requests, json
 
 app = FastAPI()
 
@@ -22,6 +23,14 @@ async def predict_temperature(country: str | None = None,
     '''
         This endpoint predicts temperature on the next day.
     '''
+    response = requests.get(
+        url='https://history.openweathermap.org/data/2.5/history/city?lat=46.63695&lon=32.61458&type=hour&start=1676922389&end=1706736171&appid=8130ec5d38f380c7999c3a959464674c'
+    )
+    data = json.loads(response.content.decode('utf-8'))
+    data = list(map(lambda content: {'ds': content['dt'], 'y': content['main']['temp']}, data['list']))
+    data = pd.DataFrame(data)
+    data['ds'] = data['ds'].map(lambda unix: datetime.utcfromtimestamp(unix).strftime('%Y-%m-%d %H:%M:%S'))
+    print(data)
 
     print('Parameters are: ', country, city, latitude, longtitude, date)
     data = pd.read_json('sample_json.json')

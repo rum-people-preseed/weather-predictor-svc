@@ -3,6 +3,7 @@ from prophet.serialize import model_to_json, model_from_json
 import pandas as pd
 import os
 from datetime import datetime
+import requests
 
 
 def calculate_hours(last_date: str, date: str) -> int:
