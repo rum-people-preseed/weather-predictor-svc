@@ -3,7 +3,7 @@ import io, base64
 import os
 
 
-async def plot_temperature_day(place: str, temperature) -> str:
+def plot_temperature_day(place: str, temperature) -> str:
     '''
         This function plots temperature of the place for the day.
     '''

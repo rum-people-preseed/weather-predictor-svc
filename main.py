@@ -25,11 +25,11 @@ async def predict_temperature(country: str | None = None,
     print('Parameters are: ', country, city, latitude, longtitude, date)
     data = pd.read_csv('./data/weatherHistory-processed.csv')
 
-    predicted = await utils.get_temperature_next(date=date,
+    predicted = utils.get_temperature_next(date=date,
                                                  temperature_data=data,
                                                  country=country,
                                                  city=city)
-    image_str = await plotter.plot_temperature_day(place='%s, %s' % (country, city),
+    image_str = plotter.plot_temperature_day(place='%s, %s' % (country, city),
                                                temperature=predicted)
 
     return {
