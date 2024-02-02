@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.responses import FileResponse
 import pandas as pd
+from datetime import datetime
 from src import utils
 from src import plotter
 
@@ -23,7 +24,12 @@ async def predict_temperature(country: str | None = None,
     '''
 
     print('Parameters are: ', country, city, latitude, longtitude, date)
-    data = pd.read_csv('./data/weatherHistory-processed.csv')
+    data = pd.read_json('sample_json.json')
+    data = data.sort_values(by=['timestamp'])
+    data = data.rename(columns={
+        'timestamp': 'ds',
+        'temperature': 'y'
+    })
 
     predicted = utils.get_temperature_next(date=date,
                                                  temperature_data=data,
