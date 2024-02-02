@@ -1,23 +1,23 @@
 import matplotlib.pyplot as plt
-import base64
-from io import BytesIO
+import os
 
 
-async def plot_temperature_day(place: str, temperature) -> BytesIO:
+async def plot_temperature_day(place: str, temperature) -> str:
     '''
         This function plots temperature of the place for the day.
     '''
-    plt.plot(temperature['ds'], temperature['yhat'], '-o', marker='s')
-    plt.xticks(rotation=45)
-    plt.xlabel('Date, UTC',labelpad=10)
-    plt.ylabel('Temperature, C')
-    plt.title('Tomorrow\'s, temperature for %s' % (place))
+    temp_dir_name = os.path.join('predictors', 'temp')
+    image_name = os.path.join(temp_dir_name, '%s.png' % (place))
 
-    figure = plt.figure()
-    figure.canvas.draw()
-    bytestream = BytesIO()
-    figure.savefig(bytestream, format='png')
-    bytestream.seek(0)
-    image = base64.encodebytes(bytestream.read()).decode('utf-8')
+    if not os.path.exists(temp_dir_name):
+        os.mkdir(temp_dir_name)
 
-    return image
+    if not os.path.exists(image_name):
+        plt.plot(temperature['ds'], temperature['yhat'], '-o', marker='s')
+        plt.xticks(rotation=45)
+        plt.xlabel('Date, UTC',labelpad=10)
+        plt.ylabel('Temperature, C')
+        plt.title('Tomorrow\'s temperature for %s' % (place))
+        plt.savefig(image_name, format='png')
+
+    return image_name
