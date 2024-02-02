@@ -8,7 +8,7 @@ async def get_temperature_next(date: str, temperature_data: pd.DataFrame, countr
     if not os.path.exists('predictors'):
         os.mkdir('predictors')
 
-    model_filename = os.path.join('predictors', '%s-%s.predictor' % (country, city))
+    model_filename = os.path.join('predictors', '%s-%s %s.predictor' % (country, city, date))
 
     if os.path.exists(model_filename):
         with open(model_filename, 'r') as model:

@@ -9,7 +9,7 @@ async def plot_temperature_day(place: str, temperature) -> str:
     '''
     x = temperature['ds'].map(lambda date: ':'.join(date.split(' ')[1].split(':')[:-1]))
     y = temperature['yhat']
-    plt.figure().set_figwidth(10)
+    plt.figure().set_figwidth(8)
     plt.plot(x, y, '-', lw=0.5, color='C1')
     plt.xticks(rotation=45)
     plt.xlabel('Time, UTC',labelpad=10)
@@ -19,6 +19,7 @@ async def plot_temperature_day(place: str, temperature) -> str:
     plt.title('Temperature for %s on %s' % (place, temperature['ds'].iloc[0].split(' ')[0]))
     plt.fill_between(list(range(24)), y, alpha=0.2, color=(252 / 255, 204 / 255, 0 / 255, 254 / 255))
     plt.xticks(range(0, 24, 3), x.iloc[::3])
+    plt.show()
 
     image_bytes = io.BytesIO()
     plt.savefig(image_bytes, format='png')
