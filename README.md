@@ -3,6 +3,8 @@ This is the core backend service for the telegram bot. Two main responsibilities
 1. Predict the weather for the next day.
 2. Building graphs
 
-# Algorithms
-
 # How to run?
+To run this application you only need to:
+```
+docker-compose up --build
+```
