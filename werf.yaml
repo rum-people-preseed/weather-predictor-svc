@@ -1,0 +1,30 @@
+configVersion: 1
+project: 'python-svc'
+---
+image: builder
+from: python:3.10-bullseye
+docker:
+  WORKDIR: /python/src/github.com/rum-people-preseed/weather-predictor-svc
+git:
+  - add: /
+    to: /python/src/github.com/rum-people-preseed/weather-predictor-svc
+    stageDependencies:
+      setup:
+        - "**/*"
+shell:
+  setup:
+    - cd /python/src/github.com/rum-people-preseed/weather-predictor-svc
+
+---
+image: service
+from: alpine:3.18
+docker:
+  ENTRYPOINT: weather-predictor-svc
+shell:
+  setup:
+    - apk add --no-cache ca-certificates
+import:
+  - image: builder
+    add: /usr/local/bin/weather-predictor-svc
+    to: /usr/local/bin/weather-predictor-svc
+    after: setup
